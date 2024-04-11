@@ -1,0 +1,105 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;\f1\fnil\fcharset0 HelveticaNeue-Bold;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf0 Solution B is the best answer here because it enables an array of any size to be passed-in while remaining effective regardless of the array size. \
+\
+At first glance, it does look slightly more complex because it has a second for-in loop, and it has 3 functions, but Solution B is still the best answer, although it could be improved. \
+\
+To improve Solution B we can shorten the code, while retaining the Solution's flexibility. To accomplish this, the entire is_pallindrome() function can be removed, as long as we update the check_all_pallindromes() function like so.\
+\
+function check_all_palindromes(array arr)\
+        for word in arr:\
+                 if word != reverse_word(word)\
+                        return false\
+        return true\
+\
+\
+\
+\
+\
+\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 Function A is the most efficient function out of the three in terms of memory and time complexity. The range of possible divisors does not include any values beyond what is necessary because checking divisors after the square root is redundant. This method of checking for divisors only up to the square root of an input results in a decrease in time complexity, which is a good thing, because as inputs get larger, the function does not check every up to the input, but rather only values up to the square root of the input, which greatly improves time complexity. As it relates to memory efficiency, Function A does not use data structures such as arrays or lists because they are not needed, and therefore is very memory efficient, because the function only stores a few simple variables rather than massive arrays or lists. \
+\
+As it relates to memory efficiency Function B is ineffective because it creates an array, potentially a very large sized array, which takes up space to store the data, and that array is constantly being updated, to make matters worse. As far as time complexity for Function B, it's checking too many values, which will result in the program spending potentially way more time to complete the algorithm.\
+\
+The loop in Function C should start at 2, and not 1. Then the check could be removed for i != 1. Additionally, the range should include n, in which case the check for i != n could also be removed. By making these changes, the time complexity of Function C would be improved. As far as memory efficiency, Function C does not create data structures such as arrays or list, so memory efficiency is not an issue with Function C.\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b \cf0 Drag the pseudocode steps below to arrange them into the correct order to create a valid solution for the above task.
+\f0\b0 \
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 initialize an empty dictionary frequency_map\
+\
+while n is greater than 0\
+    digit = n mod 10\
+    if digit is not in frequency_map keys\
+        add digit to frequency_map with an initial value of 1\
+    else\
+        add 1 to the value of digit in frequency_map\
+    n = integer part of (n / 10)\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+\
+\
+\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 Having a strong personal ethical code and promoting those ethical standards in our everyday life and workplace environment is absolutely essential.\
+\
+Response A handles this request well. The AI system identifies request to invade somebody else's privacy is unethical and possibly illegal. Then, the language model gently and politely redirects the user to appropriate conversation, rather than providing step by step instruction on how to violate someone's privacy and potentially break the law, which is exactly what Response B does.\
+\
+Therefore, Response A is appropriate, and Response B is inappropriate. \
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+\
+\
+\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 Response A provides code for the user that does not work properly. The problem with the code in Response A is that the step variable needs to be initialized outside of the while loop so that step variable's value is retained across iterations. In Response A, the step variable will be 1 for every iteration, because each iteration of the while loop step is reset to 1. \
+\
+As far as the paragraph response, it's my opinion that Response A is hard to follow, plain and simple. Response A uses more words than is needed, and if it's possible to explain something in simpler words, as is the case precisely with Response B, then I believe that should be what the language model responds to the user with. The user can always ask follow up questions, or ask the AI to explain in more detail. That all being said, I stand behind my opinion that the paragraph response in Response A is inferior to the paragraph response in Response B.\
+\
+Therefore, in terms of Code and 'paragraph', Response B is the better response. \
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 My extensive background and experience make me a strong candidate for the remote programmer position at Data Annotation. I have a deep proficiency in Swift, Flutter, and web development, as well as a strong track record in full-stack Flutter app development using Firebase, demonstrating my expertise in app development and backend management. Additionally, my proficiency in Google and Apple authentication, streams, data provider, custom widgets, animations, and more showcases my versatility and skill set.\
+\
+My academic background includes courses in Python and web design, and I am currently pursuing a Master's in Computer Science, which reflects my commitment to learning and growth in the field. My experience in cybersecurity and comfort with using computer terminals further enhance my qualifications.\
+\
+My app development projects, such as the upcoming launch of the Math GPT app on Google Play and Apple App Store, highlight my ability to develop innovative and functional applications. The app's integration of a custom ChatGPT model, which I trained myself, demonstrates my expertise in AI model development and implementation.\
+\
+Another app project of mine, Flappy Hand, showcases my creativity and ability to develop engaging gaming experiences. My proficiency in Swift and Flutter, as well as my continuous learning and development, make me a valuable asset to any team.\
+\
+My commitment to coding and my diverse interests, including 3D printing, drone building, and my personal life, add depth to my profile. My desire to work remotely while pursuing my Master's program reflects my dedication and ability to manage responsibilities effectively.\
+\
+Overall, I believe that my skills, experience, and commitment to the field make me a strong candidate for the position.\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 \
+}
