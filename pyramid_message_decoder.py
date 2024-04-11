@@ -37,8 +37,7 @@ def main():
     
     Description
     ----------
-    'main('') contains the path to the txt file stored on Scott Quashen's system, and passes that file into the decode function, 
-    which decodes the hidden message from the input txt file
+    'main()' contains the path to the txt file stored on Scott Quashen's system, and passes that file into the decode function, which decodes the hidden message from the input txt file
     
     Outputs
     -------
@@ -75,9 +74,9 @@ def decode( message_file ):
     
     The `decode()` function decodes a message from a text file encoded in a pyramid format. The key to decoding the message is to use the words corresponding to the numbers at the end of each pyramid line (e.g., 1, 3, and 6).
     
-    To decode the message, the function first isolates the numbers and their corresponding words from the text file and stores them in a dictionary. Then, it sorts the numbers and arranges them into individual lists representing each layer of the pyramid, from top to bottom. The number of rows in the pyramid is calculated to ensure that enough rows are initialized to accommodate all the elements.
+    To reveal the hidden message, the script extracts line data from the text file and creates key-value pairs for each line with the line's number being the key and the line's word being the value for a dictionary called message_dict. From there, the script builds the pyramid by first creating a list of only the numbers, then sorts that list of numbers, then determines how many rows is needed to accomodate all of the elements, then iterates each row filling them with correct elements (the numbers). The pyramid is now built. 
     
-    Next, the function iterates over each row of the pyramid, extracting the last number in each row (the key) and using it to look up the corresponding word in the dictionary. These words are added to a list of decoded words. Finally, the list of decoded words is converted into a single string, which is the decoded message returned by the function.
+    In the inner most loop (where the pyramid is filled with number data), a list of the words is appended with each 'secret word' by using the last number in each row (the key of the message_dict) to look up the corresponding word (value) in the dictionary. Now that we have the hidden message as Strings within a list, finally, the list of decoded words is converted into a single string, which is the final decoded message returned by the function. Problem solved.
     
     
     Parameters
@@ -91,6 +90,8 @@ def decode( message_file ):
     `secretMessage` (STRING): The decoded message hidden in the input text file.
         
     """
+    
+    # This dictionary will hold key value pairs for each line loaded from the text file
         
     message_dict = {}
     
@@ -102,7 +103,7 @@ def decode( message_file ):
                     
             for line in file:
             
-    		    # Isolate data 
+    		    # Isolate the data on each line 
                 
                 data = line.strip().split()
     		
@@ -121,7 +122,7 @@ def decode( message_file ):
     
             amount_of_rows = 1
             
-            # By using this calculation, it is ensured that there are enough rows to accommodate all of the elements in the pyramid
+            # By using this calculation, it is ensured that there are enough rows to accommodate all of the elements in the pyramid (determine total row count)
         
             while amount_of_rows * ( amount_of_rows + 1 ) / 2 < len( numbers ):
                 
@@ -133,7 +134,7 @@ def decode( message_file ):
             
             pyramid = []
             
-            # Initialize number index outside of the inner and outer for loop below
+            # Initialize variable outside of the below loops
             
             current_number_index = 0
             
@@ -157,7 +158,7 @@ def decode( message_file ):
                         
                         current_number_index += 1
                         
-                # the row is filled, add it to the pyramid        
+                # The row is filled, add it to the pyramid        
                         
                 pyramid.append( row )
                 
