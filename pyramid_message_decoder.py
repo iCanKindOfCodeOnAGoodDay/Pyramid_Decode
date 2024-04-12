@@ -3,7 +3,7 @@
     Scott Quashen
     Data Annotation - Assessment
     Part 3: The Pyramid Message Decoder Solution
-    April 10 2024
+    April 12 2024
 
     ------
     Description: This program decodes a message from a txt file that is encoding using a pyramid format. 
@@ -14,7 +14,7 @@
     ------
     
     ------
-    Outputs: Decoded message
+    Outputs: Decoded message, or File not found error
     ------
     
     ------
@@ -80,14 +80,14 @@ def decode( message_file ):
     
     Example Pyramid:
         
-            1
-            2 3
-            4 5 6
+        1
+        2 3
+        4 5 6
             
     Exception Possiblity 
     ----------
     
-    If file can't be opened function could throw exception, in which case message is returned as "Error finding message".
+    If file can't be opened function could throw exception.
     
     Parameters
     ----------
