@@ -37,7 +37,12 @@ def main():
     
     Description
     ----------
-    'main()' contains the path to the txt file stored on Scott Quashen's system, and passes that file into the decode function, which decodes the hidden message from the input txt file
+    'main()' contains the path to the txt file stored on Scott Quashen's system, and passes that file into the decode function, 
+    which decodes the hidden message from the input txt file
+    
+    Parameters
+    ----------
+    None.
     
     Outputs
     -------
@@ -46,21 +51,7 @@ def main():
     """
     
     file_path = '/Users/scottquashen/Developer/Python Projects/coding_qual_input.txt'
-    
-    try:
-        
-        the_message = decode( file_path )
-        
-        print( the_message )
-        
-    except FileNotFoundError:
-        
-        print( f"Error: File '{file_path}' not found." )
-        
-    except Exception as e:
-        
-        print( f"An error occurred: {e}" )
-    
+    decode( file_path )
     
 # end
     
@@ -72,12 +63,31 @@ def decode( message_file ):
     Description
     -----------
     
-    The `decode()` function decodes a message from a text file encoded in a pyramid format. The key to decoding the message is to use the words corresponding to the numbers at the end of each pyramid line (e.g., 1, 3, and 6).
+    The `decode()` function decodes a message from a text file encoded in a pyramid format. 
+    The key to decoding the message is to use the words corresponding to the numbers at the end of each pyramid line (e.g., 1, 3, and 6).
+    The pyramid is contructed by ordering the numbers consecutively, and adding another number to each row, starting with 1 on the top. 
+    How many rows to be built is determined by calculating how many rows are needed to accomodate 
+    all of the elements. By extracting only the numbers, and sorting them, 
+    pyramid rows can be constructed by adding the numbers to each
+    row based on the numbers index, with
+    each row getting one more number,
+    until all of the numbers are 
+    added to the pyramid.
     
-    To reveal the hidden message, the script extracts line data from the text file and creates key-value pairs for each line with the line's number being the key and the line's word being the value for a dictionary called message_dict. From there, the script builds the pyramid by first creating a list of only the numbers, then sorts that list of numbers, then determines how many rows is needed to accomodate all of the elements, then iterates each row filling them with correct elements (the numbers). The pyramid is now built. 
+    Line data from the txt file is extracted. Each line is a dictionary entry, with the number being the key, and the value being 
+    the word. By using the  element found at the end of each row of the pyramid, we can look up the corresponding
+    value for that element in the dictionary, which is how the hidden message is revealed.
     
-    In the inner most loop (where the pyramid is filled with number data), a list of the words is appended with each 'secret word' by using the last number in each row (the key of the message_dict) to look up the corresponding word (value) in the dictionary. Now that we have the hidden message as Strings within a list, finally, the list of decoded words is converted into a single string, which is the final decoded message returned by the function. Problem solved.
+    Example Pyramid:
+        
+            1
+            2 3
+            4 5 6
+            
+    Exception Possiblity 
+    ----------
     
+    If file can't be opened function could throw exception, in which case message is returned as "Error finding message".
     
     Parameters
     ----------
@@ -91,119 +101,58 @@ def decode( message_file ):
         
     """
     
-    # This dictionary will hold key value pairs for each line loaded from the text file
-        
-    message_dict = {}
-    
-    # Load file
+    message_dict = {} # This dictionary will hold key value pairs for each line loaded from the text file
     
     try:
     
         with open( message_file, 'r' ) as file:
                     
             for line in file:
-            
-    		    # Isolate the data on each line 
-                
-                data = line.strip().split()
-    		
-                # Insert the number as key and word as value
-           
-                message_dict[ int( data[ 0 ] ) ] = data[ 1 ]
-    
-            
-            # Isolate the numbers
-            
-            numbers = list( message_dict.keys() )
-    
+                data = line.strip().split() # Isolate the data on each line 
+                message_dict[ int( data[ 0 ] ) ] = data[ 1 ] # The number on each line is the dictionary key, and the word is the value
+         
+            numbers = list( message_dict.keys() ) # Isolate the numbers so they can be sorted and added into a pyramid
             numbers.sort() 
+            amount_of_pyramid_layers = 1 
             
-            # Create rows for each 'layer' of the pyramid
-    
-            amount_of_rows = 1
+            while amount_of_pyramid_layers * ( amount_of_pyramid_layers + 1 ) / 2 < len( numbers ): # By using this calculation, it is ensured that there are enough rows to accommodate all of the elements in the pyramid (determine total row count)
+                amount_of_pyramid_layers += 1
+                        
+            pyramid = [] # Stores rows of numbers in consecutive order, with each row having one more number than the previous
+            index = 0 # Variable used to identify which number is added to each spot of the pyramid
             
-            # By using this calculation, it is ensured that there are enough rows to accommodate all of the elements in the pyramid (determine total row count)
-        
-            while amount_of_rows * ( amount_of_rows + 1 ) / 2 < len( numbers ):
-                
-                # add a row
-                
-                amount_of_rows += 1
-            
-            # Initialize empty pyramid
-            
-            pyramid = []
-            
-            # Initialize variable outside of the below loops
-            
-            current_number_index = 0
-            
-            # The outer loop iterates each row
-            
-            for i in range( 1, amount_of_rows + 1 ):
-                
+            for i in range( 1, amount_of_pyramid_layers + 1 ): # Adding 1 ensures loop iterates over all necessasry rows for the pyramid because the Python range does not include stop value
                 row = []
-                
-                # The inner loop fills each row with numbers
-                
-                for j in range( i ):
+                for j in range( i ): # The inner loop fills each row with i amount of the correct numbers based on index
+                    if index < len( numbers ):                   
+                        row.append( numbers[ index ] )
+                        index += 1 
                         
-                    if current_number_index < len( numbers ):
-                        
-                        # Add i amount of elements from list of numbers according to the current_number_index
-                        
-                        row.append( numbers[ current_number_index ] )
-                        
-                        # Increment number index so that each iteration fills each row with the proper data
-                        
-                        current_number_index += 1
-                        
-                # The row is filled, add it to the pyramid        
-                        
-                pyramid.append( row )
-                
-            # Now that we have built the pyramid of numbers, we extract the last number from each row,
-            # which serves as the key to look up the corresponding word in the dictionary.
-            
-            # Using these keys, we construct a list of the decoded words,
-            # which will form the hidden message once combined into a single string.
-            
-            # Finally, we return the hidden message string.
-            
-            decoded_keys = []
+                pyramid.append( row ) # Row is filled
             
             decoded_words = []
             
             for line in pyramid:
-                
                 lastDigitInEachLine = line[ len( line ) - 1 ]
-                            
-                decoded_keys.append( lastDigitInEachLine )
-                
-                # Now that the last digit in each line has been extracted, each key is identified.
-                # Each key is used to look up the corresponding value in the message_dict.
+                decoded_words.append( message_dict[ lastDigitInEachLine ] ) # Use the disovered key to look up the value in the dict
+                    
+            secretMessage = " ".join( [ str(i) for i in decoded_words ] ) # Combine the list of strings into a single string
 
-                
-                decoded_words.append( message_dict[ lastDigitInEachLine ] )
-                    
-            # Combine them decoded_words into a single string
-            
-            secretMessage = " ".join( [ str(i) for i in decoded_words ] )
-                    
-            # Return the secret ( decoded ) message
-                        
             return secretMessage
         
-    except Exception as e:
+    except FileNotFoundError:
+        print( f"Error: File '{message_file}' not found.")
+
         
-        raise e
-    
 # end
-        
-            
+
 
 # calls
 
 if __name__ == "__main__":
     
     main()
+    
+    
+    
+    
