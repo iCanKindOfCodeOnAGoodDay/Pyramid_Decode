@@ -77,22 +77,25 @@ def decode( message_file ):
         numbers = list( message_map.keys() )
         numbers.sort()
 
-        pyramid_height = 1
-        while pyramid_height * ( pyramid_height + 1 ) / 2 < len( numbers ): # ensure there are enough rows to accomodate all elements
-            pyramid_height += 1 
+        height = 1 # if height were initialized to 0 the condition below would immediately be false
+        while height * ( height + 1 ) / 2 < len( numbers ): # ensure there are enough rows to accomodate all elements
+            height += 1 
 
         pyramid = []
         index = 0
         
-        for i in range( 1, pyramid_height + 1 ): # iterate rows of pyramid - add 1 because range does not include stop value
-            pyramid_row = []
-            for _ in range( i ): # iterates elements of each row
-                if index < len( numbers ): # then there are still numbers to add
-                    pyramid_row.append( numbers[ index ] )
+        for row_num in range( 1, height + 1 ): # we add 1 here so that range is from 1 to height, inclusive
+            row = [] # for each height
+            
+            for _ in range( row_num ): # it just so happens that row_num represents both the row itself and the total amount of elements inside the row
+                if index < len( numbers ): # make sure we are not trying to add elements that don't exist in our list
+                    
+                    row.append( numbers[ index ] ) # fill each spot with in row with an element
                     index += 1
-            pyramid.append( pyramid_row )
+                    
+            pyramid.append( row )
 
-        decoded_words = [ message_map[ line[ -1 ] ] for line in pyramid ] # the last element of each row in the pyramid
+        decoded_words = [ message_map[ line[ -1 ] ] for line in pyramid ] # the last element of each row in the pyramid is one of the 'hidden words'
         secret_message = " ".join( decoded_words )
 
         return secret_message
