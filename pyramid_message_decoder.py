@@ -3,14 +3,14 @@
     Scott Quashen
     Data Annotation - Assessment
     Part 3: The Pyramid Message Decoder Solution
-    April 12 2024
+    April 15 2024
 
     ------
-    Description: This program decodes a message from a txt file that is encoding using a pyramid format. 
+    Description: This program decodes a message from a txt file that is encoding using a pyramid format. A message is hidden inside a text file that contains data in the following format: each line has a number followed by a word. There are many lines in the file. To decode the message from the text data, the data needs to be reorganized into a pyramid-like structure based on the numbers found on each of the lines of data. The last number in each row of the pyramid is part of the hidden message, in order. All other words are ignored.
     ------
     
     ------
-    Inputs:  Reads data from disk. [ Update to your file path ] *** Interestingly, the message encoded in this file is not a coherent sentence.
+    Inputs: Reads data from disk. [ Update to your file path ] *** Interestingly, the message encoded in this file is not a coherent sentence.
     ------
     
     ------
@@ -27,34 +27,20 @@
     
 """
 
-
-# definitions
-
-
 def main():
     
     """
     
-    Description
-    ----------
-    'main()' contains the path to the txt file stored on Scott Quashen's system, and passes that file into the decode function, 
-    which decodes the hidden message from the input txt file
+    Main function to decode a message from a text file using a pyramid format.
     
-    Parameters
-    ----------
-    None.
-    
-    Outputs
-    -------
-    Decoded message, or error message
-
     """
     
     file_path = '/Users/scottquashen/Developer/Python Projects/coding_qual_input.txt'
-    decode( file_path )
     
-# end
-    
+    print( decode( file_path ) )
+
+# end main func
+
 
 def decode( message_file ):
     
@@ -62,84 +48,61 @@ def decode( message_file ):
     
     Description
     -----------
-    
-    A message is hidden inside a text file that contains data in the following format: 
-    each line has a number followed by a word. 
-    There are many lines in the file. 
-    To decode the message from the text data, 
-    the data needs to be reorganized into a pyramid-like structure based on the numbers 
-    found on each of the lines of data. The last number in each row of the pyramid is part of the hidden message, 
-    in order. All other words are ignored.
-            
-    Exception Possiblity 
-    ----------
-    
-    If file can't be opened function could throw exception.
+        
+    1) Data Preparation: The text file's content is parsed into a dictionary, where each line provides a number and a corresponding word. This forms key-value pairs, crucial for later decoding.
+
+    2) Building the Pyramid: To construct the pyramid, we sort the numbers extracted from the dictionary in ascending order. The pyramid is a list of lists, where each sequential row contains an additional element. Rows are created by adding numbers based on their sorted index until the row has one more element than the previous row. The amount of rows created is however many are needed to contain all of the elements. 
+
+    3) Decoding Process: With the pyramid in place, decoding begins. At each row's end, the number is used as a key to look up the corresponding word in the dictionary. These words are appended to a list, forming the "secret" message.
+
+    4) Message Reconstruction: The extracted words are stored in a list of strings, representing the decoded message in the correct order. To reveal the hidden message, the strings are combined into a single string.
     
     Parameters
     ----------
-    
-    `message_file` (Txt file): The file containing the encoded message. Each line in the file contains a number followed by a word.
+    message_file (Txt file): The file containing the encoded message. Each line in the file contains a number followed by a word.
     
     Returns
     -------
-    
-    `secretMessage` (STRING): The decoded message hidden in the input text file.
+    secretMessage (STRING): The decoded message hidden in the input text file.
         
     """
     
-    message_dict = {} # This dictionary will hold key value pairs for each line loaded from the text file: key - number, value - word
-    
+    message_map = {}
     try:
-    
         with open( message_file, 'r' ) as file:
-                    
             for line in file:
-                data = line.strip().split() # Isolate line data from text file
-                message_dict[ int( data[ 0 ] ) ] = data[ 1 ] # Fill dictionary with key value pairs from every line of text file
-         
-            numbers = list( message_dict.keys() ) # Isolate the numbers so they can be sorted and added into a pyramid
-            numbers.sort() 
-            amount_of_pyramid_layers = 1 
-            
-            while amount_of_pyramid_layers * ( amount_of_pyramid_layers + 1 ) / 2 < len( numbers ): # By using this calculation, it is ensured that there are enough rows to accommodate all of the elements in the pyramid (determine total row count)
-                amount_of_pyramid_layers += 1
-                        
-            pyramid = [] # Stores rows (lists) of numbers in consecutive order, with each row having one more number than the previous
-            index = 0 # Used to identify which number is added to each spot of the pyramid
-            
-            for i in range( 1, amount_of_pyramid_layers + 1 ): # Adding 1 ensures loop iterates over all necessasry rows for the pyramid because the Python range does not include stop value
-                row = []
-                for j in range( i ): # Fill each row with numbers based on index
-                    if index < len( numbers ):                   
-                        row.append( numbers[ index ] )
-                        index += 1 
-                        
-                pyramid.append( row ) 
-            
-            decoded_words = []
-            
-            for line in pyramid:
-                lastDigitInEachLine = line[ len( line ) - 1 ]
-                decoded_words.append( message_dict[ lastDigitInEachLine ] ) # Use each key to look up each hidden word from the dictionary
-                    
-            secretMessage = " ".join( [ str(i) for i in decoded_words ] ) # The words were found in the correct order so we can just create a single string
+                number, word = line.strip().split()
+                message_map[ int( number ) ] = word # dictionary entries to associate number (key) to word (value)
 
-            return secretMessage
+        numbers = list( message_map.keys() )
+        numbers.sort()
+
+        pyramid_height = 1
+        while pyramid_height * ( pyramid_height + 1 ) / 2 < len( numbers ): # ensure there are enough rows to accomodate all elements
+            pyramid_height += 1 
+
+        pyramid = []
+        index = 0
         
+        for i in range( 1, pyramid_height + 1 ): # iterate rows of pyramid - add 1 because range does not include stop value
+            pyramid_row = []
+            for _ in range( i ): # iterates elements of each row
+                if index < len( numbers ): # then there are still numbers to add
+                    pyramid_row.append( numbers[ index ] )
+                    index += 1
+            pyramid.append( pyramid_row )
+
+        decoded_words = [ message_map[ line[ -1 ] ] for line in pyramid ] # the last element of each row in the pyramid
+        secret_message = " ".join( decoded_words )
+
+        return secret_message
+
     except FileNotFoundError:
-        print( f"Error: File '{message_file}' not found.")
-
+        print( f"Error: File '{message_file}' not found." )
         
-# end
+# end decode func
 
 
-# calls
-
+# example calls
 if __name__ == "__main__":
-    
     main()
-    
-    
-    
-    
