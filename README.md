@@ -21,8 +21,8 @@ I passed, I know I did! But, still no work.
 All I got from Data Annotation was radio silence and and a bunch of ads. 
 
 But I also got some good practice writing Python code. 
-Data Annotation also got me thinking about optimizing code for time complexity and space efficiency 
-So I'm glad that I took the Data Annotation assessment. 
+Data Annotation also got me thinking about optimizing code for time complexity and space efficiency.
+So I am glad that I took the Data Annotation assessment. 
 
 I don't mind spending a few hours to write some code. Every time I work on a diffult coding problem I become a better Developer. 
 You'll see that I solved Data Annotation's pyramid decryption problem with a full program written in python. 
