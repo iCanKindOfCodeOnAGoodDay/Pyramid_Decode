@@ -1,26 +1,4 @@
-Data Annotation Assessment Solutions
-
-I do wonder though if the Data Annotation assessment is actually the only criteria that they are using to select 
-programmers to work on the AI code training roles, or if it's all for show. Because Data Annotation 
-does make it sound like all you have to do is pass their assessment and boom, 
-Data Annotation makes you an employment offer and you get unlimited work for $40+ an hour. 
-
-But it didn't work this way for me. I crushed their assessment. I know I did. And still, no offer.
-
-My code is well documented, up to par with industry standard like my professor taught me in University. 
-If you run my code for the decryption algorthim, you'll see that my solution solves the problem
-that Data Annotation wanted me to solve. My answers to the other questions are on the assessment are not 
-full programs like the Pyramid Decode algorithm, but they are well thought out and correct. 
-
-Yet, no offer. No big job making $40+ an hour from Data Assessment. No unlimited work. 
-So is Data Annotation really legit? I have no idea. I think they are. 
-
-Are they truthful in their messaging?
-"Pass the assessment get virtually unlimited work for $40".
-I passed, I know I did! But, still no work. 
-All I got from Data Annotation was radio silence and and a bunch of ads. 
-
-But I also got some good practice writing Python code. 
+I also got some good practice writing Python code. 
 Data Annotation also got me thinking about optimizing code for time complexity and space efficiency.
 So I am glad that I took the Data Annotation assessment. 
 
